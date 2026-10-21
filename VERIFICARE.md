@@ -30,4 +30,12 @@ Proiectul Sites istoric nu este disponibil în contul conectat. Nu s-a publicat 
 
 ## Fișiere private
 
+## Corecție instalare Render
+
+Logul primei publicări (`1c1681d`) a arătat `EUSAGE`: lipseau din lockfile intrările imbricate `@emnapi/core@1.10.0` și `@emnapi/runtime@1.10.0`, cerute de bindingul WASM Rolldown. Eroarea a fost reprodusă cu Node 24.22.1/npm 11.19.1, apoi lockfile-ul a fost regenerat cu aceeași versiune npm, fără schimbarea versiunilor pachetelor existente. Node este fixat la 24.22.1 în configurația Render și `.node-version`.
+
+Verificări după corecție: rezolvarea dependențelor Linux x64/glibc prin `npm ci --dry-run` trece; o instalare efectivă de la zero în Windows, fără configurație privată, instalează 707 pachete și compilarea producției trece. Cele 33 de teste și TypeScript trec pe Node 24.22.1. Publicarea Linux pe Render trebuie reluată cu noul commit; aceste verificări nu confirmă că serviciul extern este Live.
+
+## Fișiere private
+
 `.env.local` rămâne exclus din Git și din arhiva sursă. URI-ul SQL și cheia secretă nu trebuie incluse în bundle-ul client, capturi sau documentație. Arhiva nu conține dependențele, compilarea ori datele locale.

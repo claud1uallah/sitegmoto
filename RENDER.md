@@ -18,7 +18,7 @@ Repository-ul conține aplicația completă în rădăcină și `render.yaml`. P
 | Build Command | `npm ci --include=dev && npm run build` |
 | Start Command | `npm run db:migrate && npm start -- --hostname 0.0.0.0` |
 | Health Check Path | `/api/auth` |
-| Node | 24, din `.node-version` |
+| Node | 24.22.1, din `.node-version` |
 
 Nu selecta Static Site: magazinul folosește server, autentificare și PostgreSQL. Render furnizează automat `PORT`; serverul îl citește. Comanda de pornire aplică numai migrările noi, apoi pornește aplicația.
 
