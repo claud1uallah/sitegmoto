@@ -8,4 +8,7 @@ export default defineConfig({
   plugins: [vinext(), sites({ mockAuth: !process.env.SUPABASE_URL })],
   server: { host: "127.0.0.1" },
   ssr: { external: ["pg"] },
+  // Link loads the navigation module as a namespace. Preserve its facade so
+  // Rolldown cannot merge it into an entry that drops its public functions.
+  build: { rolldownOptions: { preserveEntrySignatures: "strict" } },
 });

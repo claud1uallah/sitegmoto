@@ -26,15 +26,19 @@ Configurează redirecturile Supabase Auth și SMTP, verifică înregistrarea/con
 
 Datele comerciantului, produsele reale, politicile, transportul, Stripe și expeditorul email necesită configurarea operatorului înainte de activarea vânzărilor. Integrarea Stripe este testată automat, dar nu s-a efectuat o plată externă. AWB-ul se introduce manual; nu există integrare automată de curier.
 
-Proiectul Sites istoric nu este disponibil în contul conectat. Nu s-a publicat această versiune. Implementarea actuală necesită hosting Node.js cu acces PostgreSQL, configurat conform README.
-
-## Fișiere private
+Proiectul Sites istoric nu este disponibil în contul conectat. Utilizatorul a publicat ulterior versiunea Node.js pe Render la `https://sitegmoto.onrender.com`; pagina și fișierele JavaScript răspund HTTP 200. Implementarea actuală folosește hosting Node.js cu acces PostgreSQL, configurat conform README.
 
 ## Corecție instalare Render
 
 Logul primei publicări (`1c1681d`) a arătat `EUSAGE`: lipseau din lockfile intrările imbricate `@emnapi/core@1.10.0` și `@emnapi/runtime@1.10.0`, cerute de bindingul WASM Rolldown. Eroarea a fost reprodusă cu Node 24.22.1/npm 11.19.1, apoi lockfile-ul a fost regenerat cu aceeași versiune npm, fără schimbarea versiunilor pachetelor existente. Node este fixat la 24.22.1 în configurația Render și `.node-version`.
 
 Verificări după corecție: rezolvarea dependențelor Linux x64/glibc prin `npm ci --dry-run` trece; o instalare efectivă de la zero în Windows, fără configurație privată, instalează 707 pachete și compilarea producției trece. Cele 33 de teste și TypeScript trec pe Node 24.22.1. Publicarea Linux pe Render trebuie reluată cu noul commit; aceste verificări nu confirmă că serviciul extern este Live.
+
+## Corecție navigare în producție
+
+Erorile din browser (`RSC prefetch setup error` și `e is not a function` la click) au fost localizate în încărcarea dinamică a namespace-ului de navigare Vinext. Codul public încărca entry-ul browserului, care nu mai exporta funcțiile folosite de Link. Configurația Rolldown păstrează acum semnăturile entry-urilor (`preserveEntrySignatures: "strict"`), generând namespace-ul separat cu funcțiile necesare.
+
+`npm run build` include o verificare a contractului de navigare din JavaScript-ul produs. Verificarea respinge bundle-ul public defect și acceptă compilarea corectată. Compilarea, TypeScript și cele 33 de teste trec pe Node 24.22.1. Controlul browserului rămâne dezactivat în Work: verificarea interactivă după deploy necesită reîncărcarea site-ului în browserul utilizatorului.
 
 ## Fișiere private
 
