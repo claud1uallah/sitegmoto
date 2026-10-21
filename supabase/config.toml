@@ -1,0 +1,13 @@
+project_id = "gtune"
+
+[db]
+major_version = 17
+
+[db.migrations]
+enabled = true
+
+[api]
+enabled = true
+schemas = ["public", "graphql_public"]
+
+# The server-only gtune schema is deliberately not exposed by PostgREST.

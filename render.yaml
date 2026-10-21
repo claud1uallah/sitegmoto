@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: sitegmoto
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm run db:migrate && npm start -- --hostname 0.0.0.0
+    healthCheckPath: /api/auth
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_SSL
+        value: require
+      - key: DATABASE_SSL_CA
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      - key: ADMIN_USER_IDS
+        sync: false
+      - key: LOCAL_ADMIN_ENABLED
+        value: "false"
+      - key: TRUST_PROXY
+        value: "false"
